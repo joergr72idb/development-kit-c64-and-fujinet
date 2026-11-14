@@ -1,4 +1,4 @@
-# Development Kit for the C64 and FujiNet / Meatloaf
+# Development Kit for the C64 and FujiNet
 
 A self-contained toolchain on macOS for writing C64 programs that use the FujiNet, and testing them
 in VICE with an emulated FujiNet on the serial bus. Everything is built into `opt/` inside this

@@ -1,4 +1,4 @@
-# CLAUDE.md - Development kit for the C64 and FujiNet / Meatloaf
+# CLAUDE.md - Development kit for the C64 and FujiNet
 
 Toolchain only - real programs live in their own project folders and point `DEV` here.
 
