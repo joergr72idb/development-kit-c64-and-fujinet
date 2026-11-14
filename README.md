@@ -34,8 +34,13 @@ make                           # samples: build/hello-c.prg, hello-asm.prg, hell
 make run                       # FujiNet-PC + VICE with the C sample
 make run PRG=build/hello-bas.prg
 make run UNITS="8 16 29 30"    # also drive 8 from FujiNet-PC (Meatloaf drive) instead of VICE's own
+make config                    # VICE with FujiNet as drive 8, for FujiNet's CONFIG: LOAD"CONFIG.PRG",8
 make stop                      # stops this kit's FujiNet-PC
 ```
+
+**FujiNet CONFIG on the C64:** pick a host with the cursor keys + RETURN, a file with RETURN, then
+the drive slot (1–8 or cursor keys) and RETURN (read only) or W (read/write). The C64 **←** key
+(Mac: **§** or **ß**) leaves CONFIG and boots the mounted disk.
 
 Samples in `samples/`:
 - `hello.c` – C with fujinet-lib: asks the FujiNet for its version, hostname and IP address.
@@ -58,6 +63,7 @@ Without a running emulator, `opt/vice-bridge/netiecctl` talks to FujiNet-PC dire
 - fujinet-lib programs built before 5.1.1 misread every reply from current firmware.
 - FujiNet-PC's web UI (port 8000) has no login: never forward it to the internet. The Atari kit's
   FujiNet-PC uses the same port – run only one of them at a time.
+- **Keyboard:** `keymaps/c64-mac-de.vkm` = VICE's German map plus the C64 ← key on §, ß and `.
 - VICE's settings and log stay in `build/` (`-config build/vicerc`, `-logfile`), never in the home folder.
 - **Real hardware:** the Meatloaf board (LOLIN D32 Pro) can also run FujiNet's `fujinet-iec-lolin-d32`
   firmware – same pins (ATN 32, CLK 33, DATA 25, SRQ 26, RESET 34).
