@@ -15,6 +15,9 @@ Toolchain only - real programs live in their own project folders and point `DEV`
 - Verify without watching the screen: start x64sc with `-remotemonitor`, then
   `printf 'm 0400 07e7\n' | nc -w 2 127.0.0.1 6510 > build/logs/screen.txt; tools/screen.py build/logs/screen.txt`.
   `grep -a 'Fuji cmd' build/logs/fujinet.log` lists commands that reached FujiNet-PC (`-a`: the log can contain NULs).
+- Keys from outside: the monitor's `keybuf` drops control characters (cursor keys etc.) - write them
+  into the key buffer instead: `> 0277 91` + `> 00c6 01` (91 = CRSR up, 11 down, 9d left, 1d right).
+  FujiNet-PC logs `NetworkProtocolTCP::write(n)` for every network write of a C64 program.
 - Never truncate `build/logs/fujinet.log` while FujiNet-PC runs (leaves NUL bytes) - `make stop` first, then `rm`.
 - Keyboard: VICE runs with `keymaps/c64-mac-de.vkm` (German Mac). The C64 "<-" key ($5F) is FujiNet CONFIG's
   ESC (leave CONFIG = boot) - VICE's own maps put it on ` (dead key on German Macs), so it was unreachable.
