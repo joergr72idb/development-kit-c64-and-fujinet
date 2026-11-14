@@ -49,10 +49,17 @@ build/samples.d64: build/hello-c.prg build/hello-asm.prg build/hello-bas.prg
 build:
 	mkdir -p build/logs
 
-# FujiNet-PC: NetIEC on TCP 1541, web UI http://localhost:8000, SD card = opt/fujinet-pc/SD
+# Ports - chosen so the Atari and the C64 kit can run side by side on one machine:
+#   Atari kit: web UI 127.0.0.1:8000, NetSIO UDP 9997 | C64 kit: web UI 127.0.0.1:8001, NetIEC TCP 1541
+WEB_PORT  ?= 8001
+NETIEC_PORT ?= 1541
+
+# FujiNet-PC: NetIEC (TCP) on NETIEC_PORT, web UI http://127.0.0.1:$(WEB_PORT) (local only), SD card = opt/fujinet-pc/SD
+# The [BOIP] port in fnconfig.ini is set from NETIEC_PORT on every start.
 fujinet: | build
+	@sed -i '' '/^\[BOIP\]/,/^\[/ s/^port=.*/port=$(NETIEC_PORT)/' $(FUJINET)/fnconfig.ini
 	@pgrep -f "$(FUJINET)/fujinet" >/dev/null || \
-	  ( nohup $(DEV)/tools/run-fujinet >> $(DEV)/build/logs/fujinet.log 2>&1 & sleep 2 )
+	  ( nohup $(DEV)/tools/run-fujinet -u http://127.0.0.1:$(WEB_PORT) >> $(DEV)/build/logs/fujinet.log 2>&1 & sleep 2 )
 
 # -config/-logfile: VICE's settings and log live in build/, never in ~/.config or ~/.local
 # keymap: German Mac keyboard, C64 "<-" on the § key (FujiNet CONFIG needs it to boot)
@@ -60,11 +67,11 @@ VICE_ARGS := -config $(DEV)/build/vicerc -logfile $(DEV)/build/logs/vice-run.log
              -keymap 0 -symkeymap $(DEV)/keymaps/c64-mac-de.vkm
 
 run: $(PRG) fujinet
-	DYLD_LIBRARY_PATH=$(BRIDGE) $(VICE)/x64sc $(VICE_ARGS) $(VICE_UNITS) -autostart $(PRG)
+	DYLD_LIBRARY_PATH=$(BRIDGE) NETIEC_PORT=$(NETIEC_PORT) $(VICE)/x64sc $(VICE_ARGS) $(VICE_UNITS) -autostart $(PRG)
 
 # VICE with FujiNet as drive 8 and no program: for FujiNet's CONFIG (LOAD"CONFIG.PRG",8)
 config: fujinet
-	DYLD_LIBRARY_PATH=$(BRIDGE) $(VICE)/x64sc $(VICE_ARGS) \
+	DYLD_LIBRARY_PATH=$(BRIDGE) NETIEC_PORT=$(NETIEC_PORT) $(VICE)/x64sc $(VICE_ARGS) \
 	  $(foreach u,8 16 29 30,$(if $(filter 8,$(u)),-drive8type 0 +drive8truedrive -devicebackend8 2 -trapdevice8,-realdevice$(u)))
 
 # only this kit's instance (matched by its path), never other projects' FujiNet-PC

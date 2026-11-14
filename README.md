@@ -15,7 +15,7 @@ folder; nothing is installed system-wide except a few Homebrew packages.
 ```
 cl65 / petcat ──► build/*.prg ──► VICE x64sc ── bridge (libopencbm) ── TCP 1541 (NetIEC) ──► FujiNet-PC
                                                                     devices 16 network · 29 clock · 30 FujiNet
-                                                                    drives 8-15 (Meatloaf) · web UI :8000
+                                                                    drives 8-15 (Meatloaf) · web UI 127.0.0.1:8001
 ```
 
 ## Setup
@@ -61,8 +61,9 @@ Without a running emulator, `opt/vice-bridge/netiecctl` talks to FujiNet-PC dire
   through the FujiNet devices (fujinet-lib) instead.
 - Only the standard IEC protocol: no JiffyDOS or other fast loaders on the FujiNet units.
 - fujinet-lib programs built before 5.1.1 misread every reply from current firmware.
-- FujiNet-PC's web UI (port 8000) has no login: never forward it to the internet. The Atari kit's
-  FujiNet-PC uses the same port – run only one of them at a time.
+- **Ports:** web UI `127.0.0.1:8001`, NetIEC TCP 1541 (`WEB_PORT` / `NETIEC_PORT` in the Makefile).
+  The Atari kit uses 8000 and UDP 9997, so both kits run side by side.
+- The web UI has no login; it listens on 127.0.0.1 only, so it isn't reachable from the network.
 - **Keyboard:** `keymaps/c64-mac-de.vkm` = VICE's German map plus the C64 ← key on §, ß and `.
 - VICE's settings and log stay in `build/` (`-config build/vicerc`, `-logfile`), never in the home folder.
 - **Real hardware:** the Meatloaf board (LOLIN D32 Pro) can also run FujiNet's `fujinet-iec-lolin-d32`

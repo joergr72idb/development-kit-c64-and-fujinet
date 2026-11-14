@@ -19,4 +19,7 @@ Toolchain only - real programs live in their own project folders and point `DEV`
 - Keyboard: VICE runs with `keymaps/c64-mac-de.vkm` (German Mac). The C64 "<-" key ($5F) is FujiNet CONFIG's
   ESC (leave CONFIG = boot) - VICE's own maps put it on ` (dead key on German Macs), so it was unreachable.
   VICE keymap files have CRLF line endings: search them with `LC_ALL=C` and strip `\r`.
+- Ports: web UI 127.0.0.1:8001, NetIEC TCP 1541 (Makefile `WEB_PORT`/`NETIEC_PORT`; `make fujinet` writes the
+  [BOIP] port into fnconfig.ini, the bridge gets `NETIEC_PORT`). The Atari kit uses 8000 + UDP 9997 - both kits
+  run at the same time (tested).
 - Start/stop FujiNet-PC only via `make fujinet` / `make stop`: they match this kit's instance by its full path.
