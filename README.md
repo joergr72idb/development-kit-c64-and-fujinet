@@ -27,7 +27,7 @@ tools/setup-linux.sh vice      # rebuild single parts: cc65 fujinet-lib fujinet-
 ```
 
 Linux needs these packages first (`setup-linux.sh` lists the missing ones and stops):
-`sudo apt install build-essential git autoconf automake cmake pkg-config libsdl2-dev libsdl2-image-dev libmbedtls-dev python3-venv gh unzip curl xa65 dos2unix bison flex texinfo`
+`sudo apt install build-essential git autoconf automake cmake pkg-config libsdl2-dev libsdl2-image-dev libmbedtls-dev python3-venv libssl-dev libcurl4-openssl-dev unzip curl xa65 dos2unix bison flex texinfo`
 
 Versions are pinned at the top of both setup scripts (keep them in step). Build logs go to `build/logs/`.
 
