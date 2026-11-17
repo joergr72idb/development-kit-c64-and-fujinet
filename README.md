@@ -114,6 +114,19 @@ Samples in `samples/`:
 Without a running emulator, `opt/vice-bridge/netiecctl` talks to FujiNet-PC directly:
 `netiecctl status 8`, `netiecctl dir 8`, `netiecctl fuji e8` (adapter config).
 
+## The same demo on four machines
+
+The kits for the Atari XL, the C64, the CPC and the Apple II each have this demo as a sample: the same
+tune and the temperature in Celle, fetched live over the network - each made with its own machine's means.
+
+| [Atari XL + FujiNet](https://github.com/joergr72idb/development-kit-atari-xl-and-fujinet) | [C64 + FujiNet](https://github.com/joergr72idb/development-kit-c64-and-fujinet) |
+|:---:|:---:|
+| ![The demo on the Atari XL](docs/demos/atari.png) | ![The demo on the C64](docs/demos/c64.png) |
+| display list interrupts, fine scrolling with HSCROL, POKEY | letters as holes in characters with a rainbow behind them, $D016, SID |
+| **[CPC + M4](https://github.com/joergr72idb/development-kit-cpc-and-m4)** | **[Apple II + FujiNet](https://github.com/joergr72idb/development-kit-apple2-and-fujinet)** |
+| ![The demo on the CPC](docs/demos/cpc.png) | ![The demo on the Apple II](docs/demos/apple2.png) |
+| Gate Array colours on every scan line, counted to the microsecond, AY | lo-res drawn again every frame into the hidden page, Mockingboard |
+
 ## Notes
 
 - **ASCII vs. PETSCII:** FujiNet sends ASCII; on the C64 the two cases are swapped and ASCII
